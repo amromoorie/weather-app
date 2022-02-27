@@ -1,16 +1,26 @@
-const dotenv = require('dotenv')
-dotenv.config()
+import './forceLoadEnvConfig.js'
 
-// Start up an instance of app
-const express = require('express')
+
+
+// require weather route
+import weather from './routes/weather.js'
+// start up an instance of app
+import express from 'express'
 const app = express()
 
-// Cors for cross origin allowance
-const cors = require('cors')
+// CORS for cross origin allowance
+import cors from 'cors'
 app.use(cors())
 
-app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+// middleware for handling urlencoded form
+app.use(express.urlencoded({ extended: true }))
+
+
+
+// ROUTES
+// app.use('/api', weather)
+app.use('/fetch-weather-info', weather)
 
 // designates what port the app will listen to for incoming requests
 const PORT = 8080
@@ -19,10 +29,9 @@ app.listen(PORT, (err) => {
   console.log(`Server is listening on port ${PORT}!`)
 })
 
-// app.get('/test', function (req, res) {
-//     res.send(mockAPIResponse)
-// })
 
-const mainPage = app.get('/', function (req, res) {
+
+ app.get('/', function (req, res) {
   res.send('hello world!')
 })
+
